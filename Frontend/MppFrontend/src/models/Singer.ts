@@ -5,5 +5,5 @@ export interface Singer{
     age:number;
     city: string;
     typeOfMusic: string;
-    //recLblId: number;
+    recLblId: number;
 }

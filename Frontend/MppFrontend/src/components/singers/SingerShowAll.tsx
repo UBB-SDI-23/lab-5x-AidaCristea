@@ -30,6 +30,7 @@ export const SingerShowAll = () => {
           <th>Age</th>
           <th>City</th>
           <th>Type of Music</th>
+          <th>Record Lable Id</th>
         </tr>
         {singers.map((singer: Singer, index) => (
           <tr key={index}>
@@ -39,6 +40,7 @@ export const SingerShowAll = () => {
             <td>{singer.age}</td>
             <td>{singer.city}</td>
             <td>{singer.typeOfMusic}</td>
+            <td>{singer.recLblId}</td>
           </tr>
         ))}
       </table>
