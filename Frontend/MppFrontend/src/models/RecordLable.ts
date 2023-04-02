@@ -1,3 +1,5 @@
+import { Singer } from "./Singer";
+
 export interface RecordLable
 {
     id:number;
@@ -6,4 +8,5 @@ export interface RecordLable
     price: number;
     review: string;
     nrCollaborations: number;
+    //singers?:number[];
 }

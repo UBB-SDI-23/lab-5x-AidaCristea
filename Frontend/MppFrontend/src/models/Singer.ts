@@ -1,3 +1,5 @@
+import { RecordLable } from "./RecordLable";
+
 export interface Singer{
     id: number;
     firstName: string;
@@ -5,5 +7,5 @@ export interface Singer{
     age:number;
     city: string;
     typeOfMusic: string;
-    recLblId: number;
+    //recLbl: RecordLable;
 }
