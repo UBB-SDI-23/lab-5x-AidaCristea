@@ -10,6 +10,7 @@ import {
     Container,
     IconButton,
     Tooltip,
+    Button,
   } from "@mui/material";
   
   import { useEffect, useState } from "react";
@@ -38,6 +39,23 @@ import { BACKEND_API_URL } from "../../constants";
           setLoading(false);
         });
     }, []);
+
+
+
+    const sortRecordLables = () => {
+      const sortedRecordLables = [...recordLbls].sort((a: RecordLable, b: RecordLable) => {
+          if (a.price < b.price) {
+              return -1;
+          }
+          if (a.price > b.price) {
+              return 1;
+          }
+          return 0;
+      })
+      console.log(sortedRecordLables);
+      setRecordLbl(sortedRecordLables);
+  }
+
   
     
     return (
@@ -55,6 +73,13 @@ import { BACKEND_API_URL } from "../../constants";
             </IconButton>
           </div>
         )}
+
+        {!loading && (
+                <Button sx={{color:"purple", border: "1px solid purple", borderColor: "purple"}} onClick={sortRecordLables} >
+                    Sort record lables
+                </Button>
+            )}
+
   
         {!loading && recordLbls.length > 0 && (
           <TableContainer component={Paper}>
