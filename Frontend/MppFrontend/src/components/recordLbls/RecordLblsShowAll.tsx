@@ -28,7 +28,7 @@ import { GlobalURL } from "../../main";
     const [recordLbls, setRecordLbl] = useState<RecordLable[]>([]);
   
     useEffect(() => {
-      fetch(GlobalURL + "/recordLbls")
+      fetch(GlobalURL + "/api/recordLbls")
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
