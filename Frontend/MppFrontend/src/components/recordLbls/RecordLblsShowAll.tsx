@@ -29,6 +29,7 @@ import { GlobalURL } from "../../main";
   
     useEffect(() => {
       fetch(GlobalURL + "/recordLbls")
+      //fetch("api/recordLbls")
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
