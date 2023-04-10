@@ -19,7 +19,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import { RecordLblsForAvg } from "../../models/RecordLblsForAge";
-import { GlobalURL } from "../../main";
+
+import { BACKEND_API_URL } from "../../constants";
 
 
 export const RecordLblsOrderBySingersAge = () => {
@@ -27,7 +28,7 @@ export const RecordLblsOrderBySingersAge = () => {
     const [records, setRecords] = useState([]);
 
     useEffect(() => {
-    fetch(GlobalURL + "/average-age")
+    fetch( `${BACKEND_API_URL}/average-age`)
         .then(res => res.json())
         .then(data => {setRecords(data); setLoading(false);})
     }, []);

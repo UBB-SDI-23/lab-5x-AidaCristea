@@ -2,7 +2,8 @@ import { Container, Card, CardContent, IconButton, CardActions, Button } from "@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios from "axios";
-import { GlobalURL } from "../../main";
+
+import { BACKEND_API_URL } from "../../constants";
 
 
 export const SingerDelete = () => {
@@ -11,7 +12,7 @@ export const SingerDelete = () => {
 
 	const handleDelete = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
-		await axios.delete(GlobalURL + `/singers/${singerId}`);
+		await axios.delete(`${BACKEND_API_URL}/singers/${singerId}`);
 		// go to courses list
 		navigate("/singers");
 	};

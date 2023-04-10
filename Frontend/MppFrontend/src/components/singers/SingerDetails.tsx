@@ -6,7 +6,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Card, CardActions, CardContent, Container, IconButton } from "@mui/material";
-import { GlobalURL } from "../../main";
+
+import { BACKEND_API_URL } from "../../constants";
 
 export const SingerDetails = () => {
     //const { singerId } = useParams();
@@ -19,7 +20,7 @@ export const SingerDetails = () => {
 			// TODO: use axios instead of fetch
 			// TODO: handle errors
 			// TODO: handle loading state
-			const response = await fetch(GlobalURL + `/singers/${singerId}`);
+			const response = await fetch(`${BACKEND_API_URL}/singers/${singerId}`);
             //Number(singerId);
             //let singerIdd = Number(singerId);
 			const singer = await response.json();

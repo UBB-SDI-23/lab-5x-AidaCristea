@@ -4,7 +4,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios from "axios";
-import { GlobalURL } from "../../main";
+
+import { BACKEND_API_URL } from "../../constants";
 
 
 
@@ -24,7 +25,7 @@ export const RecordLblsUpdate = () => {
 
     useEffect(() => {
 		const fetchRecLbl = async () => {
-			const response = await fetch(GlobalURL + `/recordLbls/${recId}`);
+			const response = await fetch(`${BACKEND_API_URL}/recordLbls/${recId}`);
 			const recLbl = await response.json();
 			setRecLbl({
                 nameRl:recLbl.nameRl,
@@ -42,7 +43,7 @@ export const RecordLblsUpdate = () => {
 	const updateRecordLbl = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
 		try {
-			await axios.put(GlobalURL + `/recordLbls/${recId}`, recLbl);
+			await axios.put(`${BACKEND_API_URL}/recordLbls/${recId}`, recLbl);
 			navigate(`/recordLbls/${recId}`);
 		} catch (error) {
 			console.log(error);

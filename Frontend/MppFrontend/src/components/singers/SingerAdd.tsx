@@ -8,7 +8,8 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios from "axios";
 import { Singer } from "../../models/Singer";
-import { GlobalURL } from "../../main";
+
+import { BACKEND_API_URL } from "../../constants";
 
 export const SingerAdd = () => {
 	const navigate = useNavigate();
@@ -26,7 +27,7 @@ export const SingerAdd = () => {
 	const addSinger = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
 		try {
-			await axios.post(GlobalURL + `/recordLbls/${id}/singer`, singer);
+			await axios.post(`${BACKEND_API_URL}/recordLbls/${id}/singer`, singer);
 			navigate("/singers");
 		} catch (error) {
 			console.log(error);

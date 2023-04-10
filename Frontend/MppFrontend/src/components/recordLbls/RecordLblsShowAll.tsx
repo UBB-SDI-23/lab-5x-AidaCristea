@@ -11,6 +11,7 @@ import {
     IconButton,
     Tooltip,
     Button,
+    Box,
   } from "@mui/material";
   
   import { useEffect, useState } from "react";
@@ -22,23 +23,67 @@ import {
   import EditIcon from "@mui/icons-material/Edit";
   import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { RecordLable } from "../../models/RecordLable";
-import { GlobalURL } from "../../main";
+
 import { BACKEND_API_URL } from "../../constants";
   
   export const RecordLblsShowAll = () => {
     const [loading, setLoading] = useState(false);
     const [recordLbls, setRecordLbl] = useState<RecordLable[]>([]);
-  
-    useEffect(() => {
-      fetch(GlobalURL + "/recordLbls")
+    const [currentPage, setCurrentPage]=useState(0)
+    const [pageSize, setPageSize] = useState(100);
+    const [totalRecLbls, setTotalRecLbls] =useState(0)
+
+
+    //useEffect(() => {
+      //fetch(GlobalURL + "/recordLbls")
       //fetch("api/recordLbls")
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          setRecordLbl(data);
+    //  fetch(GlobalURL + "/recordLbls/page/{page}/size/{size}")
+    //    .then((res) => res.json())
+    //    .then((data) => {
+    //      console.log(data);
+    //      setRecordLbl(data);
+    //      setLoading(false);
+    //    });
+    //}, []);
+
+
+    // useEffect(() => {
+    //   setLoading(true);
+    //   Promise.all([
+    //     //fetch(GlobalURL + "/recordLbls/countAll").then((response) => response.json()),
+    //     //fetch(GlobalURL + "/recordLbls/page/${page}/size/${size}").then((response) => response.json())
+    //     fetch(`${BACKEND_API_URL}/recordLbls/countAll`).then((response) => response.json()),
+    //     fetch(`${BACKEND_API_URL}/recordLbls/page/${currentPage}/size/${pageSize}`).then((response) => response.json())
+    //   ])
+    //   .then(([countAll, data]) => {
+    //     setTotalRecLbls(countAll);
+    //     setRecordLbl(data);
+    //     setLoading(false);
+    //   });
+    // }, [currentPage, pageSize]);
+
+    useEffect(() => {
+      setLoading(true);
+
+      const fetchRecLbl = () => {
+        fetch(`${BACKEND_API_URL}/recordLbls/countAll`)
+        .then((response) => response.json())
+        .then((count) => {
+          fetch(`${BACKEND_API_URL}/recordLbls/page/${currentPage}/size/${pageSize}`)
+          .then((response) => response.json())
+          .then((data) => {
+            setTotalRecLbls(count);
+            setRecordLbl(data);
+            setLoading(false);
+          });
+        })
+        .catch((error) => {
+          console.error(error);
           setLoading(false);
         });
-    }, []);
+      };
+      fetchRecLbl();
+    }, [currentPage, pageSize]);
 
 
 
@@ -55,6 +100,17 @@ import { BACKEND_API_URL } from "../../constants";
       console.log(sortedRecordLables);
       setRecordLbl(sortedRecordLables);
   }
+
+  const handlePreviousPage = () => {
+    if(currentPage>0)
+    {
+      setCurrentPage(currentPage-1);
+    }
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(currentPage+1);
+  };
 
   
     
@@ -75,9 +131,25 @@ import { BACKEND_API_URL } from "../../constants";
         )}
 
         {!loading && (
+            <div style ={{display: "flex", alignItems:"center"}}>
                 <Button sx={{color:"purple", border: "1px solid purple", borderColor: "purple"}} onClick={sortRecordLables} >
                     Sort record lables
                 </Button>
+                <Button
+                  sx={{color:"black"}}
+                  disabled={currentPage===0}
+                  onClick={handlePreviousPage}>
+                    Previous Page
+                </Button>
+                <Button
+                 sx={{color:"black"}} onClick={handleNextPage}>
+                  Next Page
+                 </Button>
+
+                 <Box mx={2} display="flex" alignItems="center">
+                  Page {currentPage+1} of {Math.ceil(totalRecLbls/pageSize)}
+                 </Box>
+            </div>
             )}
 
   
@@ -88,7 +160,7 @@ import { BACKEND_API_URL } from "../../constants";
                 <TableRow>
                   <TableCell>#</TableCell>
                   <TableCell align="center">Name</TableCell>
-                  <TableCell align="right">Address</TableCell>
+                  <TableCell align="center">Address</TableCell>
                   <TableCell align="right">Price</TableCell>
                   <TableCell align="center">Review</TableCell>
                   <TableCell align="center">Nr collaborations</TableCell>
@@ -112,7 +184,7 @@ import { BACKEND_API_URL } from "../../constants";
   
                     <TableCell align="right">{recLbl.address}</TableCell>
                     <TableCell align="right">{recLbl.price}</TableCell>
-                    <TableCell align="right">{recLbl.review}</TableCell>
+                    <TableCell align="center">{recLbl.review}</TableCell>
                     <TableCell align="center">{recLbl.nrCollaborations}</TableCell>
                     
                     <TableCell align="right">
@@ -150,6 +222,17 @@ import { BACKEND_API_URL } from "../../constants";
             </Table>
           </TableContainer>
         )}
+
+        <Button
+          sx={{color:"black"}}
+          disabled={currentPage===0}
+          onClick={handlePreviousPage}>
+            Previous Page
+          </Button>
+
+        <Button sx={{color:"black"}} onClick={handleNextPage}>
+          Next Page
+        </Button>
       </Container>
     );
   };

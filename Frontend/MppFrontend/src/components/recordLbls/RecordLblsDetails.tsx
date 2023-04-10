@@ -7,7 +7,8 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Card, CardActions, CardContent, Container, IconButton } from "@mui/material";
 import { RecordLable } from "../../models/RecordLable";
-import { GlobalURL } from "../../main";
+
+import { BACKEND_API_URL } from "../../constants";
 
 export const RecordLblsDetails = () => {
     //const { singerId } = useParams();
@@ -21,7 +22,7 @@ export const RecordLblsDetails = () => {
 			// TODO: use axios instead of fetch
 			// TODO: handle errors
 			// TODO: handle loading state
-			const response = await fetch(GlobalURL + `/recordLbls/${reclblId}`);
+			const response = await fetch(`${BACKEND_API_URL}/recordLbls/${reclblId}`);
             
 			const recordLbl = await response.json();
 			setRecordLbl(recordLbl);

@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios from "axios";
-import { GlobalURL } from "../../main";
+
+import { BACKEND_API_URL } from "../../constants";
 
 
 export const RecordLblsAdd = () => {
@@ -22,7 +23,7 @@ export const RecordLblsAdd = () => {
 	const addRecordLbl = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
 		try {
-			await axios.post(GlobalURL + "/recordLbls", recordLbl);
+			await axios.post( `${BACKEND_API_URL}/recordLbls`, recordLbl);
 			navigate("/recordLbls");
 		} catch (error) {
 			console.log(error);

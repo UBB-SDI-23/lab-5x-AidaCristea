@@ -20,14 +20,15 @@ import AddIcon from "@mui/icons-material/Add";
 import ReadMoreIcon from "@mui/icons-material/ReadMore";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { GlobalURL } from "../../main";
+
+import { BACKEND_API_URL } from "../../constants";
 
 export const SingerShowAll = () => {
   const [loading, setLoading] = useState(false);
   const [singers, setSingers] = useState<Singer[]>([]);
 
   useEffect(() => {
-    fetch(GlobalURL + "/singers")
+    fetch( `${BACKEND_API_URL}/singers`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);

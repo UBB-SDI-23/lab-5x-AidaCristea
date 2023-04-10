@@ -2,7 +2,8 @@ import { Container, Card, CardContent, IconButton, CardActions, Button } from "@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios from "axios";
-import { GlobalURL } from "../../main";
+
+import { BACKEND_API_URL } from "../../constants";
 
 export const RecordLblsDelete = () => {
 	const { id } = useParams();
@@ -10,7 +11,7 @@ export const RecordLblsDelete = () => {
 
 	const handleDelete = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
-		await axios.delete(GlobalURL + `/recordLbls/${id}`);
+		await axios.delete(`${BACKEND_API_URL}/recordLbls/${id}`);
 		
 		navigate("/recordLbls");
 	};
