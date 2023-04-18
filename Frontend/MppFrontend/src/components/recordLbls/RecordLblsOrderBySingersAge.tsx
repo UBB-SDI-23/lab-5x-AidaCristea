@@ -48,7 +48,7 @@ export const RecordLblsOrderBySingersAge = () => {
           fetch(`${BACKEND_API_URL}/recordLbls/countAll`)
           .then((response) => response.json())
           .then((count) => {
-            fetch(`${BACKEND_API_URL}/average-age`)
+            fetch(`${BACKEND_API_URL}/average-age/page/${currentPage}/size/${pageSize}`)
             .then((response) => response.json())
             .then((data) => {
               setTotalRecLbls(count);
