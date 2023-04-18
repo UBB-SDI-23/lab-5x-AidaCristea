@@ -10,6 +10,8 @@ import {
 	Container,
 	IconButton,
 	Tooltip,
+    Button,
+    Box,
 } from "@mui/material";
 
 import EditIcon from "@mui/icons-material/Edit";
@@ -26,14 +28,53 @@ import { BACKEND_API_URL } from "../../constants";
 export const RecordLblsOrderBySingersAge = () => {
     const[loading, setLoading] = useState(true)
     const [records, setRecords] = useState([]);
+    const [pageSize, setPageSize] = useState(100);
+    const [totalRecLbls, setTotalRecLbls] =useState(0)
+    const [currentPage, setCurrentPage]=useState(0)
+
+    // useEffect(() => {
+    // fetch( `${BACKEND_API_URL}/average-age`)
+    //     .then(res => res.json())
+    //     .then(data => {setRecords(data); setLoading(false);})
+    // }, []);
+
+    // console.log(records);
+
 
     useEffect(() => {
-    fetch( `${BACKEND_API_URL}/average-age`)
-        .then(res => res.json())
-        .then(data => {setRecords(data); setLoading(false);})
-    }, []);
+        setLoading(true);
+  
+        const fetchRecLbl = () => {
+          fetch(`${BACKEND_API_URL}/recordLbls/countAll`)
+          .then((response) => response.json())
+          .then((count) => {
+            fetch(`${BACKEND_API_URL}/average-age`)
+            .then((response) => response.json())
+            .then((data) => {
+              setTotalRecLbls(count);
+              setRecords(data);
+              setLoading(false);
+            });
+          })
+          .catch((error) => {
+            console.error(error);
+            setLoading(false);
+          });
+        };
+        fetchRecLbl();
+      }, [currentPage, pageSize]);
 
-    console.log(records);
+
+      const handlePreviousPage = () => {
+        if(currentPage>0)
+        {
+          setCurrentPage(currentPage-1);
+        }
+      };
+    
+      const handleNextPage = () => {
+        setCurrentPage(currentPage+1);
+      };
 
     
     return (
@@ -44,7 +85,28 @@ export const RecordLblsOrderBySingersAge = () => {
 
         {!loading && records.length == 0 && <div>No records found</div>}
 
+        {!loading && (
+            <div style ={{display: "flex", alignItems:"center"}}>
+                
+                <Button
+                  sx={{color:"black"}}
+                  disabled={currentPage===0}
+                  onClick={handlePreviousPage}>
+                    Previous Page
+                </Button>
+                <Button
+                 sx={{color:"black"}} onClick={handleNextPage}>
+                  Next Page
+                 </Button>
+
+                 <Box mx={2} display="flex" alignItems="center">
+                  Page {currentPage+1} of {Math.ceil(totalRecLbls/pageSize)}
+                 </Box>
+            </div>
+            )}
+
         {!loading && records.length > 0 && (
+           
 
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 800 }} aria-label="simple table">
@@ -77,8 +139,19 @@ export const RecordLblsOrderBySingersAge = () => {
                 </TableBody>
                 </Table>
             </TableContainer>
+            
         )
         }
+        <Button
+          sx={{color:"black"}}
+          disabled={currentPage===0}
+          onClick={handlePreviousPage}>
+            Previous Page
+          </Button>
+
+        <Button sx={{color:"black"}} onClick={handleNextPage}>
+          Next Page
+        </Button>
     </Container>
         
     );       
