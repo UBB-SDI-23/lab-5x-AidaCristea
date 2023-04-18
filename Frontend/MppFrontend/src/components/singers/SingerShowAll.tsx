@@ -10,6 +10,8 @@ import {
   Container,
   IconButton,
   Tooltip,
+  Button,
+  Box,
 } from "@mui/material";
 
 import { useEffect, useState } from "react";
@@ -26,18 +28,57 @@ import { BACKEND_API_URL } from "../../constants";
 export const SingerShowAll = () => {
   const [loading, setLoading] = useState(false);
   const [singers, setSingers] = useState<Singer[]>([]);
+  const [pageSize, setPageSize] = useState(100);
+  const [totalRecLbls, setTotalSingers] =useState(0)
+  const [currentPage, setCurrentPage]=useState(0)
+
+  // useEffect(() => {
+  //   fetch( `${BACKEND_API_URL}/singers`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //       setSingers(data);
+  //       setLoading(false);
+  //     });
+  // }, []);
+
+
 
   useEffect(() => {
-    fetch( `${BACKEND_API_URL}/singers`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setSingers(data);
+    setLoading(true);
+
+    const fetchRecLbl = () => {
+      fetch(`${BACKEND_API_URL}/singers/countAll`)
+      .then((response) => response.json())
+      .then((count) => {
+        fetch(`${BACKEND_API_URL}/singers/page/${currentPage}/size/${pageSize}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setTotalSingers(count);
+          setSingers(data);
+          setLoading(false);
+        });
+      })
+      .catch((error) => {
+        console.error(error);
         setLoading(false);
       });
-  }, []);
+    };
+    fetchRecLbl();
+  }, [currentPage, pageSize]);
 
   
+  const handlePreviousPage = () => {
+    if(currentPage>0)
+    {
+      setCurrentPage(currentPage-1);
+    }
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(currentPage+1);
+  };
+
   return (
     <Container>
       <h1>All singers</h1>
@@ -53,6 +94,26 @@ export const SingerShowAll = () => {
           </IconButton>
         </div>
       )}
+
+      {!loading && (
+            <div style ={{display: "flex", alignItems:"center"}}>
+               
+                <Button
+                  sx={{color:"black"}}
+                  disabled={currentPage===0}
+                  onClick={handlePreviousPage}>
+                    Previous Page
+                </Button>
+                <Button
+                 sx={{color:"black"}} onClick={handleNextPage}>
+                  Next Page
+                 </Button>
+
+                 <Box mx={2} display="flex" alignItems="center">
+                  Page {currentPage+1} of {Math.ceil(totalRecLbls/pageSize)}
+                 </Box>
+            </div>
+            )}
 
       {!loading && singers.length > 0 && (
         <TableContainer component={Paper}>
@@ -124,6 +185,16 @@ export const SingerShowAll = () => {
           </Table>
         </TableContainer>
       )}
+      <Button
+          sx={{color:"black"}}
+          disabled={currentPage===0}
+          onClick={handlePreviousPage}>
+            Previous Page
+          </Button>
+
+        <Button sx={{color:"black"}} onClick={handleNextPage}>
+          Next Page
+        </Button>
     </Container>
   );
 };
