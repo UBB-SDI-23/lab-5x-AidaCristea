@@ -169,13 +169,13 @@ import { BACKEND_API_URL } from "../../constants";
               </TableHead>
               <TableBody>
                 {recordLbls.map((recLbl, index) => (
-                  <TableRow key={recLbl.id}>
+                  <TableRow key={recLbl.idRecLbl}>
                     <TableCell component="th" scope="row">
                       {index + 1}
                     </TableCell>
                     <TableCell component="th" scope="row">
                       <Link
-                        to={`/recordLbls/${recLbl.id}`}
+                        to={`/recordLbls/${recLbl.idRecLbl}`}
                         title="View record lables details"
                       >
                         {recLbl.nameRl}
@@ -191,7 +191,7 @@ import { BACKEND_API_URL } from "../../constants";
                       <IconButton
                         component={Link}
                         sx={{ mr: 3 }}
-                        to={`/recordLbls/${recLbl.id}/details`}
+                        to={`/recordLbls/${recLbl.idRecLbl}`}
                       >
                         <Tooltip title="View record lable details" arrow>
                           <ReadMoreIcon color="primary" />
@@ -201,7 +201,7 @@ import { BACKEND_API_URL } from "../../constants";
                       <IconButton
                         component={Link}
                         sx={{ mr: 3 }}
-                        to={`/recordLbls/${recLbl.id}/edit`}
+                        to={`/recordLbls/${recLbl.idRecLbl}/edit`}
                         title="Edit record lable details"
                       >
                         <EditIcon />
@@ -210,7 +210,7 @@ import { BACKEND_API_URL } from "../../constants";
                       <IconButton
                         component={Link}
                         sx={{ mr: 3 }}
-                        to={`/recordLbls/${recLbl.id}/delete`}
+                        to={`/recordLbls/${recLbl.idRecLbl}/delete`}
                         title="Delete record lable"
                       >
                         <DeleteForeverIcon sx={{ color: "red" }} />

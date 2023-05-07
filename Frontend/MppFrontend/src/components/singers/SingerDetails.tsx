@@ -8,12 +8,13 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Card, CardActions, CardContent, Container, IconButton } from "@mui/material";
 
 import { BACKEND_API_URL } from "../../constants";
+import { SingerAllFields } from "../../models/SingerAllFields";
 
 export const SingerDetails = () => {
     //const { singerId } = useParams();
     const { singerId } = useParams<{ singerId: string }>();
     //const singerIdd = parseInt(singerId ?? '0', 10);
-	const [singer, setSinger] = useState<Singer>();
+	const [singer, setSinger] = useState<SingerAllFields>();
 
 	useEffect(() => {
 		const fetchSinger = async () => {
@@ -40,11 +41,15 @@ export const SingerDetails = () => {
 						<ArrowBackIcon />
 					</IconButton>{" "}
 					<h1>Singer Details</h1>
-					<p>Singer First Name: {singer?.firstName}</p>
-					<p>Singer Last Name: {singer?.lastName}</p>
-					<p>Singer Age: {singer?.age}</p>
-                    <p>Singer Type of Music: {singer?.typeOfMusic}</p>
-                   
+					<p>First Name: {singer?.firstName}</p>
+					<p>Last Name: {singer?.lastName}</p>
+					<p>Age: {singer?.age}</p>
+                    <p>Type of Music: {singer?.typeOfMusic}</p>
+					<p>RecordLable: {singer?.recLbl.nameRl}</p>
+					<p>RecordLable Adress: {singer?.recLbl.address}</p>
+					<p>RecordLable Nr Collaborations: {singer?.recLbl.nrCollaborations}</p>
+					<p>RecordLable Price: {singer?.recLbl.price}</p>
+					<p>RecordLable Review: {singer?.recLbl.review}</p>
 					
 				</CardContent>
 				<CardActions>

@@ -6,6 +6,8 @@ import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import InterpreterModeIcon from '@mui/icons-material/InterpreterMode';
 import EmergencyRecordingIcon from '@mui/icons-material/EmergencyRecording';
 import StarBorderPurple500Icon from '@mui/icons-material/StarBorderPurple500';
+import GroupsIcon from '@mui/icons-material/Groups';
+import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 
 export const AppMenu = () => {
 	const location = useLocation();
@@ -54,6 +56,24 @@ export const AppMenu = () => {
 						sx={{ mr: 5 }}
 						startIcon={<StarBorderPurple500Icon />}>
 						Record Lables Ordered
+					</Button>
+					<Button
+						variant={path.startsWith("/groups") ? "outlined" : "text"}
+						to="/groups"
+						component={Link}
+						color="inherit"
+						sx={{ mr: 5 }}
+						startIcon={<GroupsIcon />}>
+						Groups
+					</Button>
+					<Button
+						variant={path.startsWith("/albums") ? "outlined" : "text"}
+						to="/albums"
+						component={Link}
+						color="inherit"
+						sx={{ mr: 5 }}
+						startIcon={<CollectionsBookmarkIcon />}>
+						Albums
 					</Button>
 
 				</Toolbar>

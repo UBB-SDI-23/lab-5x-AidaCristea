@@ -107,7 +107,6 @@ export const RecordLblsOrderBySingersAge = () => {
 
         {!loading && records.length > 0 && (
            
-
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 800 }} aria-label="simple table">
                     <TableHead>
@@ -119,7 +118,6 @@ export const RecordLblsOrderBySingersAge = () => {
                             <TableCell align="center">Review</TableCell>
                             <TableCell align="center">Nr Collaborations</TableCell>
                             <TableCell align="center">Average Singers Age</TableCell>
-                            
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -139,7 +137,6 @@ export const RecordLblsOrderBySingersAge = () => {
                 </TableBody>
                 </Table>
             </TableContainer>
-            
         )
         }
         <Button

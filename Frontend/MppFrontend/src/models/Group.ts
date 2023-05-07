@@ -5,4 +5,5 @@ export interface Group{
     nameGr: string;
     musicSpecialization: string;
     review: string;
+    description: string;
 }

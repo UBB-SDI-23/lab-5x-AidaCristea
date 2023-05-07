@@ -1,11 +1,11 @@
 import { RecordLable } from "./RecordLable";
 
-export interface Singer{
+export interface SingerAllFields{
     id: number;
     firstName: string;
     lastName: string;
     age:number;
     city: string;
     typeOfMusic: string;
-    recLblId: number;
+    recLbl: RecordLable;
 }
