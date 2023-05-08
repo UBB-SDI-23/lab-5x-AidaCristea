@@ -1,2 +1,2 @@
-/api/* http://SDI-Aida-Cristea.crabdance.com:8080/:splat 200!
+/api/* http://SDI-Aida-Cristea.crabdance.com/:splat 200!
 /* /index.html  200
