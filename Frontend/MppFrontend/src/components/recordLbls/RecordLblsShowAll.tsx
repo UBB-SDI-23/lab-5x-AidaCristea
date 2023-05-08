@@ -25,10 +25,12 @@ import {
 import { RecordLable } from "../../models/RecordLable";
 
 import { BACKEND_API_URL } from "../../constants";
+import { RecordLblsForAvg } from "../../models/RecordLblsForAge";
   
   export const RecordLblsShowAll = () => {
     const [loading, setLoading] = useState(false);
     const [recordLbls, setRecordLbl] = useState<RecordLable[]>([]);
+    //const [recordLbls, setRecordLbl] = useState<RecordLblsForAvg[]>([]);
     const [currentPage, setCurrentPage]=useState(0)
     const [pageSize, setPageSize] = useState(100);
     const [totalRecLbls, setTotalRecLbls] =useState(0)
@@ -88,7 +90,8 @@ import { BACKEND_API_URL } from "../../constants";
 
 
     const sortRecordLables = () => {
-      const sortedRecordLables = [...recordLbls].sort((a: RecordLable, b: RecordLable) => {
+      //const sortedRecordLables = [...recordLbls].sort((a: RecordLable, b: RecordLable) => {
+        const sortedRecordLables = [...recordLbls].sort((a: RecordLable, b: RecordLable) => {
           if (a.price < b.price) {
               return -1;
           }
@@ -186,6 +189,7 @@ import { BACKEND_API_URL } from "../../constants";
                     <TableCell align="right">{recLbl.price}</TableCell>
                     <TableCell align="center">{recLbl.review}</TableCell>
                     <TableCell align="center">{recLbl.nrCollaborations}</TableCell>
+                    
                     
                     <TableCell align="right">
                       <IconButton

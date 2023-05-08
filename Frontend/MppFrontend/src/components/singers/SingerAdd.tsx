@@ -14,6 +14,8 @@ import { RecordLable } from "../../models/RecordLable";
 import { Singer } from "../../models/Singer";
 import {debounce} from "lodash";
 import { SingerAllFields } from "../../models/SingerAllFields";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const SingerAdd = () => {
 	const navigate = useNavigate();
@@ -60,16 +62,58 @@ export const SingerAdd = () => {
 
 
 
+	// const addSinger = async (event: { preventDefault: () => void }) => {
+	// 	event.preventDefault();
+	// 	try {
+	// 		//await axios.post(`${BACKEND_API_URL}/recordLbls/${idRec}/singer`, singer);
+	// 		await axios.post(`${BACKEND_API_URL}/singers`, singer);
+	// 		navigate("/singers");
+	// 	} catch (error) {
+	// 		console.log(error);
+	// 	}
+	// };
+
+
+
 	const addSinger = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
-		try {
-			//await axios.post(`${BACKEND_API_URL}/recordLbls/${idRec}/singer`, singer);
-			await axios.post(`${BACKEND_API_URL}/singers`, singer);
-			navigate("/singers");
-		} catch (error) {
+		try{
+			const response = await axios.post(`${BACKEND_API_URL}/singers`, singer);
+			
+			if(singer.age <2)
+			{
+				throw new Error("Singer should be older than 2 years old");
+			}
+
+			if(response.status >=200 && response.status<300)
+			{
+				navigate("/singers");
+			}
+			else if(response.status === 400)
+			{
+				const error_message = response.data.error_message;
+				toast.error(error_message);
+			}
+			else 
+			{
+				throw new Error("An error occured while adding the item!");
+			}
+		}
+		catch(error)
+		{
+			if(axios.isAxiosError(error) && error.response?.status===400)
+			{
+				const errorMsg = error.response.data.message;
+				toast.error(errorMsg ?? "Error: First Name should not be blank || Last name sould not be blank");
+				
+			}
+			else{
+				toast.error("An error occurred while adding the item");
+			}
 			console.log(error);
 		}
-	};
+	}
+
 
     const handleInputChange = (event: any, value: any, reason:any) => {
 		console.log("input", value, reason);
@@ -154,6 +198,8 @@ export const SingerAdd = () => {
 								}
 							}}
 							/>
+
+							<ToastContainer />
 
                        
 						<Button type="submit">Add Singer</Button>

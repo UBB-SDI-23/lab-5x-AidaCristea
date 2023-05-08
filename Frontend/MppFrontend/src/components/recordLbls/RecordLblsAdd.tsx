@@ -6,6 +6,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios from "axios";
 
 import { BACKEND_API_URL } from "../../constants";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 export const RecordLblsAdd = () => {
@@ -20,15 +22,54 @@ export const RecordLblsAdd = () => {
         nrCollaborations: 1,
 	});
 
+	// const addRecordLbl = async (event: { preventDefault: () => void }) => {
+	// 	event.preventDefault();
+	// 	try {
+	// 		await axios.post( `${BACKEND_API_URL}/recordLbls`, recordLbl);
+	// 		navigate("/recordLbls");
+	// 	} catch (error) {
+	// 		console.log(error);
+	// 	}
+	// };
+
 	const addRecordLbl = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
-		try {
-			await axios.post( `${BACKEND_API_URL}/recordLbls`, recordLbl);
-			navigate("/recordLbls");
-		} catch (error) {
+		try{
+			const response = await axios.post( `${BACKEND_API_URL}/recordLbls`, recordLbl);
+			if(recordLbl.address.length <2)
+			{
+				throw new Error("Address should be longer than 2 charaters");
+			}
+
+			if(response.status >=200 && response.status<300)
+			{
+				navigate("/recordLbls");
+			}
+			else if(response.status ===400)
+			{
+				const error_message = response.data.error_message;
+				toast.error(error_message);
+			}
+			else 
+			{
+				throw new Error("An error occured while adding the item!");
+			}
+		}
+		catch(error)
+		{
+			if(axios.isAxiosError(error) && error.response?.status===400)
+			{
+				const errorMsg = error.response.data.error_message;
+				toast.error(errorMsg ?? "Error: Name should not be blank || Nr Collaborations should not be null || Price should be more than 1");
+				
+			}
+			else{
+				toast.error("An error occurred while adding the item");
+			}
 			console.log(error);
 		}
-	};
+	}
+	
 
 	return (
 		<Container>
@@ -82,7 +123,7 @@ export const RecordLblsAdd = () => {
 							onChange={(event) => setRecordLbl({ ...recordLbl, nrCollaborations: Number(event.target.value) })}
 						/>
 
-                       
+                       <ToastContainer />
 
 						<Button type="submit">Add Record lable</Button>
 					</form>
